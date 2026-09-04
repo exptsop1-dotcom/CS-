@@ -1,0 +1,6 @@
+{
+  "name": "Apex Corporate Secretary — Futuristic Compliance Intelligence",
+  "description": "Next-generation Company Secretary and corporate governance command center prototype, delivering high-precision compliance, secretarial audits, and statutory filings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

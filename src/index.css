@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #020408;
+    color: #f8fafc;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .font-mono-code, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Technical Dashboard / Data Grid Theme Variables & Patterns */
+:root {
+  --tech-bg: #020408;
+  --tech-cyan: #00D4FF;
+  --tech-cyan-hover: #00E5FF;
+  --tech-border: rgba(255, 255, 255, 0.1);
+  --tech-border-cyan: rgba(0, 212, 255, 0.35);
+}
+
+.technical-grid {
+  background-image: 
+    linear-gradient(#00D4FF 1px, transparent 1px),
+    linear-gradient(90deg, #00D4FF 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.technical-grid-dense {
+  background-image: 
+    linear-gradient(#00D4FF 1px, transparent 1px),
+    linear-gradient(90deg, #00D4FF 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.technical-radar {
+  background: radial-gradient(circle at 50% 50%, #0a1020 0%, #020408 100%);
+}
+
+.stroke-text {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+  color: transparent;
+}
+
+.stroke-text-cyan {
+  -webkit-text-stroke: 1px rgba(0, 212, 255, 0.5);
+  color: transparent;
+}
+
+.tech-panel {
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-panel-dark {
+  background-color: rgba(2, 4, 8, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-panel-cyan {
+  background-color: rgba(0, 212, 255, 0.04);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.tech-btn-primary {
+  background-color: #00D4FF;
+  color: #020408;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.tech-btn-primary:hover {
+  background-color: #00E5FF;
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+}
+
+.tech-btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  background: transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.tech-btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.tech-btn-outline-cyan {
+  border: 1px solid #00D4FF;
+  color: #00D4FF;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  background: transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.tech-btn-outline-cyan:hover {
+  background-color: rgba(0, 212, 255, 0.12);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.25);
+}
+
+/* Precise Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020408;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111d2e;
+  border-radius: 0;
+  border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00D4FF;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+.scanline-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.9), transparent);
+  animation: scanline 7s linear infinite;
+  pointer-events: none;
+}
+
+
