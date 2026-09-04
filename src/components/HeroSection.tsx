@@ -5,36 +5,142 @@ import {
   ArrowRight, 
   TrendingUp, 
   FileCheck2, 
-  AlertTriangle, 
+  AlertCircle, 
   CheckCircle2, 
   Calendar, 
+  PieChart as PieIcon,
+  Activity,
   Layers, 
+  Clock,
   Sparkles,
   ChevronRight,
-  Fingerprint,
   Lock,
-  Cpu
+  Building2,
+  HelpCircle,
+  RefreshCw
 } from 'lucide-react';
 import { useCustomizer } from '../context/CustomizerContext';
 
-const ROTATING_PHRASES = [
-  'Governance. Simplified.',
-  'Precision in Every Compliance.',
-  'Building Stronger Corporate Foundations.',
-  'Your Corporate Compliance Command Center.'
+interface DataPoint {
+  month: string;
+  score: number;
+  filings: number;
+  note: string;
+}
+
+const TREND_DATA: DataPoint[] = [
+  { month: 'Nov', score: 96.4, filings: 28, note: 'Pre-AGM statutory clearance complete. Zero MCA queries raised.' },
+  { month: 'Dec', score: 97.2, filings: 34, note: 'Financial statement XBRL tagging (AOC-4) finalized with ROC.' },
+  { month: 'Jan', score: 98.6, filings: 41, note: 'Director KYC (DIR-3) verification completed across 12 board members.' },
+  { month: 'Feb', score: 99.1, filings: 39, note: 'Secretarial audit scope under Section 204 approved by Audit Committee.' },
+  { month: 'Mar', score: 99.7, filings: 52, note: 'Full year statutory registers audited & reconciled with depository records.' },
+];
+
+interface ServiceSlice {
+  name: string;
+  percent: number;
+  color: string;
+  detail: string;
+  regulations: string;
+}
+
+const SERVICES_PIE: ServiceSlice[] = [
+  { 
+    name: 'Secretarial Audit & Standards', 
+    percent: 36, 
+    color: '#0A2540', 
+    detail: 'Mandatory statutory audit under Section 204 of Companies Act 2013 & SEBI LODR Reg 24A.',
+    regulations: 'ICSI SS-1 & SS-2'
+  },
+  { 
+    name: 'Annual MCA & ROC Filings', 
+    percent: 28, 
+    color: '#0284C7', 
+    detail: 'Complete preparation, vetting, and certification of AOC-4, MGT-7, and statutory returns.',
+    regulations: 'Companies Act 2013'
+  },
+  { 
+    name: 'Corporate Restructuring & M&A', 
+    percent: 20, 
+    color: '#0F766E', 
+    detail: 'Legal due diligence, NCLT merger petitions, share capital alteration, and rights issues.',
+    regulations: 'NCLT & SEBI Rules'
+  },
+  { 
+    name: 'FEMA, RBI & Cross-Border Advisory', 
+    percent: 16, 
+    color: '#C5A059', 
+    detail: 'FDI reporting, FC-GPR/FC-TRS filings, FLA annual returns, and compounding advisory.',
+    regulations: 'RBI FEMA 1999'
+  },
+];
+
+interface NewsSnippet {
+  id: string;
+  tag: string;
+  headline: string;
+  source: string;
+  timeAgo: string;
+  impact: 'High' | 'Medium' | 'Informational';
+  explanation: string;
+}
+
+const NEWS_SNIPPETS: NewsSnippet[] = [
+  {
+    id: 'n1',
+    tag: 'MCA V3 MANDATE',
+    headline: 'Audit Trail & Edit Log certification guidelines issued for statutory secretarial filings',
+    source: 'Ministry of Corporate Affairs',
+    timeAgo: '14m ago',
+    impact: 'High',
+    explanation: 'Independent CS must verify automated audit trail software compliance under Companies (Accounts) Rules.'
+  },
+  {
+    id: 'n2',
+    tag: 'SEBI LODR',
+    headline: 'Secretarial Compliance Report deadline aligned for top 1000 listed entities',
+    source: 'Securities and Exchange Board of India',
+    timeAgo: '1h ago',
+    impact: 'Medium',
+    explanation: 'Enhanced disclosures required for related party transactions approved by board resolution.'
+  },
+  {
+    id: 'n3',
+    tag: 'RBI FEMA',
+    headline: 'Single Master Form (SMF) portal updates for inbound FDI reporting',
+    source: 'Reserve Bank of India',
+    timeAgo: '3h ago',
+    impact: 'Informational',
+    explanation: 'Streamlined approval queue for foreign investment inward remittance certification.'
+  }
 ];
 
 export const HeroSection: React.FC = () => {
   const { config, setIsConsultationOpen } = useCustomizer();
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState<'status' | 'filings' | 'alerts'>('status');
+  const [activeTab, setActiveTab] = useState<'trend' | 'services' | 'news'>('trend');
+  const [hoveredPoint, setHoveredPoint] = useState<DataPoint | null>(null);
+  const [hoveredSlice, setHoveredSlice] = useState<ServiceSlice | null>(null);
+  const [hoveredNews, setHoveredNews] = useState<NewsSnippet | null>(null);
+  
+  // Simulated real-time fluctuating score
+  const [baseScore, setBaseScore] = useState(99.4);
+  const [isLiveSimulating, setIsLiveSimulating] = useState(true);
+  const [lastPulse, setLastPulse] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % ROTATING_PHRASES.length);
-    }, 3800);
-    return () => clearInterval(timer);
-  }, []);
+    if (!isLiveSimulating) return;
+    const interval = setInterval(() => {
+      // Gentle realistic micro-fluctuation between 99.1 and 99.8
+      const delta = (Math.random() - 0.5) * 0.2;
+      setBaseScore((prev) => {
+        const next = Math.min(99.9, Math.max(98.8, +(prev + delta).toFixed(1)));
+        return next;
+      });
+      setLastPulse(new Date().toLocaleTimeString());
+    }, 4500);
+
+    return () => clearInterval(interval);
+  }, [isLiveSimulating]);
 
   const scrollToServices = () => {
     const el = document.getElementById('services');
@@ -42,390 +148,523 @@ export const HeroSection: React.FC = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-[90vh] flex items-center justify-center pt-6 pb-16 overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#00D4FF]/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+    <section id="home" className="relative min-h-[92vh] flex items-center justify-center pt-8 pb-16 overflow-hidden bg-[#FAF9F6]">
+      {/* Soft warm architectural radial background */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[550px] pointer-events-none -z-10 opacity-70"
+        style={{
+          background: 'radial-gradient(ellipse 65% 50% at 50% 15%, rgba(245, 242, 235, 0.9), transparent 70%)'
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Top subtle technical telemetry line */}
-        <div className="hidden sm:flex items-center justify-between pb-6 mb-8 border-b border-white/10 text-[10px] uppercase font-mono tracking-[0.25em] text-slate-400">
-          <div className="flex items-center gap-4">
-            <span className="text-[#00D4FF]">SYS.LOC // ASIA-IN-MCA-V3</span>
-            <span className="opacity-40">•</span>
-            <span>DATA GRID STABLE</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-white/60">NODE: 0x7F8B</span>
-            <span className="w-1.5 h-1.5 bg-[#00D4FF] rounded-none"></span>
-            <span className="text-[#00D4FF]">ONLINE</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           
-          {/* Left Column: Typography, Value Proposition & CTAs */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          {/* Left Column: Typography, Value Proposition & Trust */}
+          <div className="lg:col-span-6 space-y-7 text-left">
             
             {/* Trust Pill Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2.5 px-3 py-1.5 border border-[#00D4FF]/40 bg-[#00D4FF]/5 rounded-none backdrop-blur-md shadow-[0_0_15px_rgba(0,212,255,0.15)]"
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#F4F1EA] border border-[#E5E0D4] text-slate-700 shadow-xs"
             >
-              <div className="w-2 h-2 rounded-none bg-[#00D4FF] shadow-[0_0_8px_#00D4FF] animate-pulse" />
-              <span className="text-[10px] font-mono text-[#00D4FF] font-bold tracking-[0.25em] uppercase">
-                TRUSTED CORPORATE SECRETARY FIRM
+              <div className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+              <span className="text-xs font-semibold tracking-wide text-slate-800">
+                {config.tagline.toUpperCase()}
               </span>
-              <span className="text-[10px] text-slate-400 border-l border-white/20 pl-2 font-mono">
-                EST. 2014
+              <span className="text-xs text-slate-500 border-l border-slate-300 pl-2">
+                ESTD. {config.yearEstablished}
               </span>
             </motion.div>
 
-            {/* Main Headline with Technical Stroke styling */}
+            {/* Main Headline */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               className="space-y-3"
             >
-              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black text-white tracking-tight uppercase leading-[1.05]">
-                Corporate Compliance,{' '}
-                <span className="stroke-text tracking-tighter">
-                  Reimagined.
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold text-[#0F172A] tracking-tight leading-[1.12]">
+                Corporate Governance & Compliance,{' '}
+                <span className="text-[#0369A1]">
+                  Delivered with Precision.
                 </span>
               </h1>
-
-              {/* Dynamic Rotating Sub-badge */}
-              <div className="h-8 flex items-center">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={phraseIndex}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-sm sm:text-base font-mono text-[#00D4FF] font-medium flex items-center gap-2 tracking-wide uppercase"
-                  >
-                    <span className="text-[#00D4FF] font-bold">&gt;&gt;</span>
-                    <span>{ROTATING_PHRASES[phraseIndex]}</span>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
             </motion.div>
 
             {/* Subheadline */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed font-normal"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed"
             >
-              Expert Company Secretary and corporate compliance solutions designed to help businesses stay compliant, confident, and ready for growth.
+              <strong className="text-slate-900 font-semibold">{config.companyName}</strong> is a firm of practicing Company Secretaries providing corporate compliance, consultancy, and advisory services. Equipped with an expansive professional network to cater to diverse corporate sectors.
             </motion.p>
 
-            {/* Technical Value Micro-Grid */}
+            {/* Corporate Value Micro-Cards */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="grid grid-cols-3 gap-3 py-2 max-w-xl text-xs font-mono"
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="grid grid-cols-3 gap-3 max-w-lg"
             >
-              <div className="p-3 bg-white/5 border border-white/10 rounded-none backdrop-blur-sm border-l-2 border-l-[#00D4FF]">
-                <div className="text-slate-400 text-[9px] uppercase tracking-widest">Framework</div>
-                <div className="text-white font-bold text-xs sm:text-sm mt-0.5 tracking-wider">COMPANIES ACT 2013</div>
+              <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
+                <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Statute</div>
+                <div className="text-slate-900 font-bold text-xs sm:text-sm mt-0.5">Companies Act</div>
               </div>
-              <div className="p-3 bg-white/5 border border-white/10 rounded-none backdrop-blur-sm border-l-2 border-l-[#00D4FF]">
-                <div className="text-slate-400 text-[9px] uppercase tracking-widest">Filing Accuracy</div>
-                <div className="text-[#00D4FF] font-bold text-xs sm:text-sm mt-0.5 tracking-wider">100% PRE-VETTED</div>
+              <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
+                <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Audit Rating</div>
+                <div className="text-sky-700 font-bold text-xs sm:text-sm mt-0.5">100% Verified</div>
               </div>
-              <div className="p-3 bg-white/5 border border-white/10 rounded-none backdrop-blur-sm border-l-2 border-l-[#00D4FF]">
-                <div className="text-slate-400 text-[9px] uppercase tracking-widest">MCA Tracking</div>
-                <div className="text-emerald-400 font-bold text-xs sm:text-sm mt-0.5 tracking-wider">REAL-TIME RADAR</div>
+              <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
+                <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Turnaround</div>
+                <div className="text-emerald-700 font-bold text-xs sm:text-sm mt-0.5">Zero Delays</div>
               </div>
             </motion.div>
 
-            {/* Dual Action High-Contrast CTAs */}
+            {/* Action CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="flex flex-wrap items-center gap-4 pt-2"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-4 pt-1"
             >
               <button
-                onClick={scrollToServices}
-                className="bg-[#00D4FF] text-black font-black px-7 py-3.5 uppercase tracking-widest text-xs hover:bg-[#00E5FF] shadow-[0_0_20px_rgba(0,212,255,0.3)] rounded-none transition-all flex items-center gap-2 cursor-pointer"
+                onClick={() => setIsConsultationOpen(true)}
+                className="btn-primary-navy px-6 py-3.5 rounded-xl text-sm font-semibold tracking-wide flex items-center gap-2 cursor-pointer shadow-sm hover:shadow-md transition-all"
               >
-                <span>Explore Our Services</span>
+                <span>Book a Consultation</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() => setIsConsultationOpen(true)}
-                className="border border-white/20 text-white font-bold px-7 py-3.5 uppercase tracking-widest text-xs hover:bg-white/5 hover:border-white/40 rounded-none transition-all flex items-center gap-2 cursor-pointer"
+                onClick={scrollToServices}
+                className="btn-secondary-light px-6 py-3.5 rounded-xl text-sm font-semibold tracking-wide flex items-center gap-2 cursor-pointer hover:bg-slate-50 transition-all"
               >
-                <span>Talk to an Expert</span>
-                <ChevronRight className="w-4 h-4 text-[#00D4FF]" />
+                <span>Explore Services</span>
+                <ChevronRight className="w-4 h-4 text-slate-500" />
               </button>
             </motion.div>
 
-            {/* Small reassurance tag */}
+            {/* Institutional Credentials */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex items-center gap-4 text-xs font-mono text-slate-400 pt-1 tracking-wider"
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="flex items-center gap-4 text-xs text-slate-500 pt-1"
             >
               <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#00D4FF]" />
-                <span>ICSI Secretarial Standards (SS-1 & SS-2)</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>ICSI Secretarial Standards Compliant</span>
               </div>
-              <span className="text-white/20">•</span>
+              <span className="text-slate-300">•</span>
               <div className="flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-[#00D4FF]" />
-                <span>Encrypted Regulatory Vault</span>
+                <ShieldCheck className="w-4 h-4 text-sky-700" />
+                <span>MCA-21 V3 Portal Integrated</span>
               </div>
             </motion.div>
           </div>
 
-          {/* Right Column: High-Tech Interactive Data Grid HUD */}
-          <div className="lg:col-span-5 relative">
+          {/* Right Column: Interactive Executive Dashboard */}
+          <div className="lg:col-span-6 relative">
             
-            {/* Main Command Center Data Card */}
+            {/* Dashboard Container */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 20 }}
+              initial={{ opacity: 0, scale: 0.97, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative bg-black/70 border border-white/10 rounded-none p-5 sm:p-6 backdrop-blur-md shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden"
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative bg-white border border-slate-200/90 rounded-2xl p-6 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.07)]"
             >
-              {/* Scanline laser */}
-              <div className="scanline-effect" />
-
-              {/* Card Top Telemetry Bar */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 bg-[#00D4FF]/10 border border-[#00D4FF]/40 rounded-none flex items-center justify-center text-[#00D4FF]">
-                    <Cpu className="w-3.5 h-3.5" />
+              
+              {/* Dashboard Header & Simulated Live Telemetry */}
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#0A2540] text-white flex items-center justify-center shadow-xs">
+                    <Activity className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-white tracking-[0.15em] uppercase font-mono flex items-center gap-2">
-                      COMPLIANCE COMMAND HUD
-                      <span className="w-1.5 h-1.5 bg-[#00D4FF] shadow-[0_0_8px_#00D4FF] animate-pulse" />
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+                        Corporate Intelligence Console
+                      </h3>
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     </div>
-                    <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">
-                      SYS ID: CS-V3-LIVE-FEED
-                    </div>
+                    <p className="text-xs text-slate-500">
+                      Corporate Intelligence. Compliance. Precision.
+                    </p>
                   </div>
                 </div>
 
-                <div className="text-right font-mono">
-                  <div className="text-[10px] text-[#00D4FF] font-bold bg-[#00D4FF]/10 px-2 py-0.5 border border-[#00D4FF]/30 tracking-wider">
-                    MCA-21 SYNCED
-                  </div>
-                  <div className="text-[9px] text-slate-400 opacity-60 mt-0.5 tracking-wider">LATENCY: 12ms</div>
-                </div>
-              </div>
-
-              {/* Interactive Dashboard Tabs */}
-              <div className="flex items-center gap-1 my-4 p-1 bg-white/5 rounded-none border border-white/10">
-                {(['status', 'filings', 'alerts'] as const).map((tab) => (
+                <div className="flex items-center gap-2">
                   <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`flex-1 py-1.5 text-[11px] font-mono rounded-none transition-all uppercase tracking-wider ${
-                      activeTab === tab
-                        ? 'bg-[#00D4FF] text-black font-black shadow-[0_0_10px_rgba(0,212,255,0.4)]'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
-                    }`}
+                    onClick={() => setIsLiveSimulating(!isLiveSimulating)}
+                    className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-50 transition-colors text-xs flex items-center gap-1 cursor-pointer"
+                    title="Toggle simulated real-time data feeds"
                   >
-                    {tab === 'status' ? 'Governance' : tab === 'filings' ? 'Filings' : 'Alerts'}
+                    <RefreshCw className={`w-3.5 h-3.5 ${isLiveSimulating ? 'text-sky-600 animate-spin' : 'text-slate-400'}`} style={{ animationDuration: '6s' }} />
+                    <span className="text-[11px] hidden sm:inline">{isLiveSimulating ? 'Live Feeds' : 'Paused'}</span>
                   </button>
-                ))}
+                </div>
               </div>
 
-              {/* Tab 1: Status & Governance Score */}
-              {activeTab === 'status' && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-3 font-mono"
+              {/* Fluctuating Live Score & Key Metric Bar */}
+              <div className="grid grid-cols-2 gap-3 my-4">
+                <div className="p-3.5 rounded-xl bg-[#F8F6F1] border border-[#E8E4DA]">
+                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+                    <span>Active Compliance Score</span>
+                    <span className="text-[10px] text-emerald-700 bg-emerald-100/80 px-1.5 py-0.5 rounded-md font-medium">Optimal</span>
+                  </div>
+                  <div className="text-3xl font-bold text-slate-900 mt-1 flex items-baseline gap-1">
+                    <span>{baseScore.toFixed(1)}</span>
+                    <span className="text-slate-400 text-sm font-normal">/ 100</span>
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1 flex items-center gap-1">
+                    <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Updated {lastPulse}</span>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    Filing Velocity & Readiness
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-slate-900">
+                      100%
+                    </div>
+                    <div className="text-xs text-sky-700 font-medium mt-0.5">
+                      192 / 192 Filings Verified
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tab Navigation for Interactive Feeds & Charts */}
+              <div className="flex items-center gap-1 p-1 bg-slate-100/90 rounded-xl mb-4 text-xs font-medium text-slate-600">
+                <button
+                  onClick={() => setActiveTab('trend')}
+                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeTab === 'trend'
+                      ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                      : 'hover:text-slate-900'
+                  }`}
                 >
-                  <div className="p-4 bg-white/5 border border-white/10 rounded-none flex items-center justify-between">
-                    <div>
-                      <div className="text-[10px] text-slate-400 uppercase tracking-[0.2em]">
-                        COMPOSITE COMPLIANCE SCORE
-                      </div>
-                      <div className="text-3xl font-black text-white mt-1 flex items-baseline gap-1.5">
-                        <span className="text-[#00D4FF]">98.4</span>
-                        <span className="text-slate-400 opacity-50 text-sm font-normal">/ 100</span>
-                      </div>
-                      <div className="text-[10px] text-emerald-400 flex items-center gap-1 mt-1 tracking-wider uppercase">
-                        <TrendingUp className="w-3 h-3" />
-                        <span>ZERO PENALTY EXPOSURE</span>
-                      </div>
-                    </div>
+                  <TrendingUp className="w-3.5 h-3.5 text-sky-600" />
+                  <span>Compliance Trend</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('services')}
+                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeTab === 'services'
+                      ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                      : 'hover:text-slate-900'
+                  }`}
+                >
+                  <PieIcon className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>Services Utilized</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('news')}
+                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeTab === 'news'
+                      ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                      : 'hover:text-slate-900'
+                  }`}
+                >
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Regulatory Feeds</span>
+                </button>
+              </div>
 
-                    {/* Circular HUD Ring */}
-                    <div className="relative w-16 h-16 flex items-center justify-center">
-                      <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                        <path
-                          className="text-white/10"
-                          strokeWidth="3"
-                          stroke="currentColor"
-                          fill="none"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        <path
-                          className="text-[#00D4FF]"
-                          strokeDasharray="98.4, 100"
-                          strokeWidth="3"
-                          strokeLinecap="square"
-                          stroke="currentColor"
-                          fill="none"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                      </svg>
-                      <div className="absolute text-[11px] font-black text-white font-mono">
-                        98%
-                      </div>
+              {/* TAB 1: Interactive Compliance Trend Line Chart */}
+              {activeTab === 'trend' && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs text-slate-500">
+                    <span>5-Month Statutory Audit Clearance History</span>
+                    <span className="text-slate-400">Hover points for audit details</span>
+                  </div>
+
+                  {/* SVG Line Chart Container */}
+                  <div className="relative h-44 bg-slate-50 rounded-xl border border-slate-200/80 p-3 pt-6 flex flex-col justify-end">
+                    
+                    {/* SVG Line & Curves */}
+                    <svg className="w-full h-28 overflow-visible" viewBox="0 0 400 100" preserveAspectRatio="none">
+                      {/* Grid Guide Lines */}
+                      <line x1="0" y1="20" x2="400" y2="20" stroke="#E2E8F0" strokeDasharray="3 3" />
+                      <line x1="0" y1="60" x2="400" y2="60" stroke="#E2E8F0" strokeDasharray="3 3" />
+                      <line x1="0" y1="90" x2="400" y2="90" stroke="#E2E8F0" strokeDasharray="3 3" />
+
+                      {/* Area Fill */}
+                      <path
+                        d="M 20 70 L 100 55 L 180 35 L 260 25 L 350 12 L 350 100 L 20 100 Z"
+                        fill="rgba(3, 105, 161, 0.08)"
+                      />
+
+                      {/* Stroke Line */}
+                      <path
+                        d="M 20 70 L 100 55 L 180 35 L 260 25 L 350 12"
+                        fill="none"
+                        stroke="#0369A1"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+
+                      {/* Interactive Nodes */}
+                      {TREND_DATA.map((pt, i) => {
+                        const xs = [20, 100, 180, 260, 350];
+                        const ys = [70, 55, 35, 25, 12];
+                        const isHovered = hoveredPoint?.month === pt.month;
+
+                        return (
+                          <g 
+                            key={pt.month}
+                            onMouseEnter={() => setHoveredPoint(pt)}
+                            onMouseLeave={() => setHoveredPoint(null)}
+                            className="cursor-pointer"
+                          >
+                            <circle
+                              cx={xs[i]}
+                              cy={ys[i]}
+                              r={isHovered ? 7 : 5}
+                              fill={isHovered ? '#0284C7' : '#FFFFFF'}
+                              stroke="#0369A1"
+                              strokeWidth={isHovered ? 3 : 2}
+                              className="transition-all duration-200"
+                            />
+                          </g>
+                        );
+                      })}
+                    </svg>
+
+                    {/* Month Labels below axis */}
+                    <div className="flex justify-between px-2 pt-2 text-[11px] font-medium text-slate-500">
+                      {TREND_DATA.map((pt) => (
+                        <button
+                          key={pt.month}
+                          onClick={() => setHoveredPoint(pt)}
+                          className={`hover:text-sky-700 transition-colors ${hoveredPoint?.month === pt.month ? 'text-sky-700 font-bold' : ''}`}
+                        >
+                          {pt.month}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  {/* 3 Metric Mini Sliders with Left Indicator Line */}
-                  <div className="space-y-2 text-xs font-mono">
-                    <div className="p-2.5 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] flex items-center justify-between">
-                      <span className="text-slate-300">Board Meeting Quorum (SS-1)</span>
-                      <span className="text-emerald-400 font-bold text-[11px] tracking-wider">100% COMPLIANT</span>
-                    </div>
-                    <div className="p-2.5 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] flex items-center justify-between">
-                      <span className="text-slate-300">Statutory Registers (MGT-1,2)</span>
-                      <span className="text-[#00D4FF] font-bold text-[11px] tracking-wider">UP TO DATE</span>
-                    </div>
-                    <div className="p-2.5 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] flex items-center justify-between">
-                      <span className="text-slate-300">Director KYC Standing (DIR-3)</span>
-                      <span className="text-emerald-400 font-bold text-[11px] tracking-wider">ALL ACTIVE</span>
-                    </div>
+                  {/* Contextual Tooltip / Explanatory Card */}
+                  <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs shadow-xs min-h-[56px] flex items-center">
+                    {hoveredPoint ? (
+                      <div>
+                        <div className="font-semibold text-slate-900 flex items-center gap-2">
+                          <span className="text-sky-700 font-bold">{hoveredPoint.month} Performance: {hoveredPoint.score}%</span>
+                          <span className="text-slate-400">•</span>
+                          <span className="text-slate-600">{hoveredPoint.filings} Filings Certified</span>
+                        </div>
+                        <p className="text-slate-600 mt-0.5 leading-snug">{hoveredPoint.note}</p>
+                      </div>
+                    ) : (
+                      <div className="text-slate-500 flex items-center gap-2">
+                        <HelpCircle className="w-4 h-4 text-slate-400 shrink-0" />
+                        <span>Hover over any data point along the trend line to inspect monthly secretarial audit outcomes and filing tallies.</span>
+                      </div>
+                    )}
                   </div>
-                </motion.div>
+                </div>
               )}
 
-              {/* Tab 2: Upcoming Filings */}
-              {activeTab === 'filings' && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-2.5 font-mono"
-                >
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] flex items-center justify-between text-xs">
-                    <div>
-                      <div className="font-bold text-white">Form AOC-4 (Financials)</div>
-                      <div className="text-[10px] text-slate-400">Balance sheet & P&L with XBRL tags</div>
+              {/* TAB 2: Interactive Services Utilized Pie / Donut Chart */}
+              {activeTab === 'services' && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs text-slate-500">
+                    <span>Advisory & Compliance Portfolio Distribution</span>
+                    <span className="text-slate-400">Hover slices to view details</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                    
+                    {/* Donut Visualizer */}
+                    <div className="sm:col-span-5 flex justify-center">
+                      <div className="relative w-32 h-32">
+                        <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                          {/* Slices rendered with strokeDasharray */}
+                          {/* Slice 1: 36% (starts at 0) */}
+                          <circle
+                            cx="18" cy="18" r="15.915"
+                            fill="transparent"
+                            stroke="#0A2540"
+                            strokeWidth="5"
+                            strokeDasharray="36 64"
+                            strokeDashoffset="0"
+                            onMouseEnter={() => setHoveredSlice(SERVICES_PIE[0])}
+                            className="cursor-pointer hover:opacity-85 transition-opacity"
+                          />
+                          {/* Slice 2: 28% (offset 36) */}
+                          <circle
+                            cx="18" cy="18" r="15.915"
+                            fill="transparent"
+                            stroke="#0284C7"
+                            strokeWidth="5"
+                            strokeDasharray="28 72"
+                            strokeDashoffset="-36"
+                            onMouseEnter={() => setHoveredSlice(SERVICES_PIE[1])}
+                            className="cursor-pointer hover:opacity-85 transition-opacity"
+                          />
+                          {/* Slice 3: 20% (offset 64) */}
+                          <circle
+                            cx="18" cy="18" r="15.915"
+                            fill="transparent"
+                            stroke="#0F766E"
+                            strokeWidth="5"
+                            strokeDasharray="20 80"
+                            strokeDashoffset="-64"
+                            onMouseEnter={() => setHoveredSlice(SERVICES_PIE[2])}
+                            className="cursor-pointer hover:opacity-85 transition-opacity"
+                          />
+                          {/* Slice 4: 16% (offset 84) */}
+                          <circle
+                            cx="18" cy="18" r="15.915"
+                            fill="transparent"
+                            stroke="#C5A059"
+                            strokeWidth="5"
+                            strokeDasharray="16 84"
+                            strokeDashoffset="-84"
+                            onMouseEnter={() => setHoveredSlice(SERVICES_PIE[3])}
+                            className="cursor-pointer hover:opacity-85 transition-opacity"
+                          />
+                        </svg>
+
+                        {/* Center metric */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                          <span className="text-base font-bold text-slate-900">
+                            {hoveredSlice ? `${hoveredSlice.percent}%` : '100%'}
+                          </span>
+                          <span className="text-[9px] text-slate-500 uppercase tracking-wider">
+                            {hoveredSlice ? 'Share' : 'Portfolio'}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <span className="px-2 py-0.5 bg-[#00D4FF]/10 text-[#00D4FF] border border-[#00D4FF]/30 text-[9px] uppercase tracking-wider font-bold">
-                        IN DRAFT
-                      </span>
-                      <div className="text-[10px] text-slate-400 opacity-60 mt-1">Due: Oct 30</div>
+
+                    {/* Legend list */}
+                    <div className="sm:col-span-7 space-y-1.5 text-xs">
+                      {SERVICES_PIE.map((slice) => (
+                        <div
+                          key={slice.name}
+                          onMouseEnter={() => setHoveredSlice(slice)}
+                          onMouseLeave={() => setHoveredSlice(null)}
+                          className={`p-2 rounded-lg cursor-pointer transition-all flex items-center justify-between ${
+                            hoveredSlice?.name === slice.name
+                              ? 'bg-white shadow-xs border border-slate-200'
+                              : 'hover:bg-white/60'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <span 
+                              className="w-2.5 h-2.5 rounded-full shrink-0" 
+                              style={{ backgroundColor: slice.color }} 
+                            />
+                            <span className="font-medium text-slate-800 text-[11px] truncate max-w-[150px]">
+                              {slice.name}
+                            </span>
+                          </div>
+                          <span className="font-bold text-slate-700 text-xs">
+                            {slice.percent}%
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] flex items-center justify-between text-xs">
-                    <div>
-                      <div className="font-bold text-white">Form MGT-7 (Annual Return)</div>
-                      <div className="text-[10px] text-slate-400">Shareholder register & meetings tally</div>
-                    </div>
-                    <div className="text-right">
-                      <span className="px-2 py-0.5 bg-amber-400/10 text-amber-300 border border-amber-400/30 text-[9px] uppercase tracking-wider font-bold">
-                        SCHEDULED
-                      </span>
-                      <div className="text-[10px] text-slate-400 opacity-60 mt-1">Due: Nov 29</div>
-                    </div>
+                  {/* Contextual Explanation Tooltip */}
+                  <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs shadow-xs min-h-[56px] flex items-center">
+                    {hoveredSlice ? (
+                      <div>
+                        <div className="font-semibold text-slate-900 flex items-center gap-2">
+                          <span>{hoveredSlice.name} ({hoveredSlice.percent}%)</span>
+                          <span className="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium">
+                            {hoveredSlice.regulations}
+                          </span>
+                        </div>
+                        <p className="text-slate-600 mt-0.5 leading-snug">{hoveredSlice.detail}</p>
+                      </div>
+                    ) : (
+                      <div className="text-slate-500 flex items-center gap-2">
+                        <HelpCircle className="w-4 h-4 text-slate-400 shrink-0" />
+                        <span>Hover over any category above to see statutory mandates and advisory deliverables.</span>
+                      </div>
+                    )}
                   </div>
-
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] flex items-center justify-between text-xs">
-                    <div>
-                      <div className="font-bold text-white">Form DPT-3 (Deposit Return)</div>
-                      <div className="text-[10px] text-slate-400">Outstanding loans & non-deposit liabilities</div>
-                    </div>
-                    <div className="text-right">
-                      <span className="px-2 py-0.5 bg-emerald-400/10 text-emerald-300 border border-emerald-400/30 text-[9px] uppercase tracking-wider font-bold">
-                        APPROVED
-                      </span>
-                      <div className="text-[10px] text-emerald-400 mt-1">SRN: AA892104</div>
-                    </div>
-                  </div>
-                </motion.div>
+                </div>
               )}
 
-              {/* Tab 3: Regulatory Alerts */}
-              {activeTab === 'alerts' && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-2.5 font-mono"
-                >
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] text-xs">
-                    <div className="flex items-center gap-1.5 text-[#00D4FF] font-bold">
-                      <AlertTriangle className="w-3.5 h-3.5 text-[#00D4FF]" />
-                      MCA NOTIFICATION UPDATE
-                    </div>
-                    <p className="text-slate-300 text-[11px] mt-1 leading-snug font-sans">
-                      Mandatory audit trail (edit log) compliance verification active for FY 2025-26 statutory reporting.
-                    </p>
+              {/* TAB 3: Simulated Real-Time Regulatory News Feeds */}
+              {activeTab === 'news' && (
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between text-xs text-slate-500">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                      Live Statutory Bulletins
+                    </span>
+                    <span className="text-slate-400">Synced via MCA & SEBI Radars</span>
                   </div>
 
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-none border-l-2 border-l-[#00D4FF] text-xs">
-                    <div className="flex items-center gap-1.5 text-[#00D4FF] font-bold">
-                      <FileCheck2 className="w-3.5 h-3.5 text-[#00D4FF]" />
-                      ICSI GUIDELINE REVISION
-                    </div>
-                    <p className="text-slate-300 text-[11px] mt-1 leading-snug font-sans">
-                      Secretarial Standard SS-1 updated protocols on hybrid board meeting video recordings and transcript preservation.
-                    </p>
+                  <div className="space-y-2">
+                    {NEWS_SNIPPETS.map((item) => (
+                      <div
+                        key={item.id}
+                        onMouseEnter={() => setHoveredNews(item)}
+                        onMouseLeave={() => setHoveredNews(null)}
+                        className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                          hoveredNews?.id === item.id
+                            ? 'bg-[#F8F6F1] border-[#E8E4DA] shadow-xs'
+                            : 'bg-slate-50 border-slate-200 hover:bg-slate-100/60'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between text-[11px] mb-1">
+                          <span className="font-semibold text-sky-800 bg-sky-50 px-2 py-0.5 rounded-md border border-sky-200/60">
+                            {item.tag}
+                          </span>
+                          <span className="text-slate-400 text-[10px]">{item.timeAgo}</span>
+                        </div>
+                        <h4 className="text-xs font-semibold text-slate-900 leading-snug">
+                          {item.headline}
+                        </h4>
+                        <div className="flex items-center justify-between mt-1 text-[11px] text-slate-500">
+                          <span>Source: {item.source}</span>
+                          <span className="text-slate-700 font-medium hover:underline flex items-center gap-0.5">
+                            Details <ChevronRight className="w-3 h-3" />
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </motion.div>
+
+                  {/* Contextual Explanation Tooltip */}
+                  {hoveredNews && (
+                    <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs shadow-xs">
+                      <span className="font-semibold text-slate-900">Governance Advisory Impact:</span>
+                      <p className="text-slate-600 mt-0.5 leading-snug">{hoveredNews.explanation}</p>
+                    </div>
+                  )}
+                </div>
               )}
 
-              {/* Bottom Quick Action */}
-              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-                <span className="text-slate-400 uppercase text-[10px] tracking-wider">COMMAND PORTAL PREVIEW</span>
-                <a
-                  href="#dashboard-preview"
-                  className="text-[#00D4FF] hover:text-[#00E5FF] flex items-center gap-1 font-bold uppercase tracking-wider text-[11px] group"
+              {/* Bottom Console Footer */}
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <span className="flex items-center gap-1.5">
+                  <Lock className="w-3.5 h-3.5 text-slate-400" />
+                  Client Confidentiality Guaranteed
+                </span>
+                <button
+                  onClick={() => setIsConsultationOpen(true)}
+                  className="text-sky-700 hover:text-sky-900 font-semibold flex items-center gap-1"
                 >
-                  <span>Access Data Grid</span>
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </a>
-              </div>
-            </motion.div>
-
-            {/* Satellite Badge 1 */}
-            <motion.div
-              animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="hidden sm:flex absolute -bottom-4 -left-4 bg-[#020408]/95 border border-white/10 rounded-none p-2.5 shadow-2xl backdrop-blur-xl items-center gap-3 font-mono"
-            >
-              <div className="w-8 h-8 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
-                <Fingerprint className="w-4 h-4" />
-              </div>
-              <div>
-                <div className="text-[11px] font-bold text-white tracking-wider">DIN & DSC VERIFIED</div>
-                <div className="text-[9px] text-slate-400 uppercase">Class 3 Cryptographic Signatures</div>
-              </div>
-            </motion.div>
-
-            {/* Satellite Badge 2 */}
-            <motion.div
-              animate={{ y: [0, 4, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="hidden sm:flex absolute -top-4 -right-4 bg-[#020408]/95 border border-white/10 rounded-none p-2.5 shadow-2xl backdrop-blur-xl items-center gap-3 font-mono"
-            >
-              <div className="w-8 h-8 bg-[#00D4FF]/10 border border-[#00D4FF]/30 text-[#00D4FF] flex items-center justify-center">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-              <div>
-                <div className="text-[11px] font-bold text-white tracking-wider">ZERO PENALTY AUDIT</div>
-                <div className="text-[9px] text-slate-400 uppercase">100% Statutory Clearance</div>
+                  <span>Request Full Audit</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </motion.div>
 

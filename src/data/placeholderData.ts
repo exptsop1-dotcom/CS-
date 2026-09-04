@@ -11,17 +11,17 @@ import {
 
 export const INITIAL_SERVICES: ServiceItem[] = [
   {
-    id: 'incorporation',
+    id: 'company-registration',
     number: '01',
-    name: 'Company Incorporation',
-    shortDescription: 'Help businesses establish a strong legal and corporate foundation.',
-    fullDescription: 'Complete end-to-end secretarial support for incorporating Private Limited, Public Limited, Section 8, and Producer Companies, as well as LLPs and Branch/Subsidiary entities for multinational corporations.',
+    name: 'Company Registration',
+    shortDescription: 'Complete end-to-end incorporation of Private Limited, Public Limited, OPC, and LLP entities.',
+    fullDescription: 'Comprehensive secretarial guidance and execution for incorporating Private Limited Companies, LLPs, One Person Companies (OPC), Section 8 Non-Profit Companies, and Producer Companies with unassailable statutory purity.',
     category: 'Formation',
-    forms: ['SPICe+ (INC-32)', 'INC-33 (SPICe+ MOA)', 'INC-34 (SPICe+ AOA)', 'AGILE-PRO-S', 'INC-20A'],
+    forms: ['SPICe+ (INC-32)', 'INC-33 (MOA)', 'INC-34 (AOA)', 'AGILE-PRO-S', 'INC-20A'],
     deliverables: [
-      'Digital Signature Certificates (DSC) & Director Identification Numbers (DIN)',
       'RUN Name Reservation & Corporate Identification Number (CIN)',
-      'Certificate of Incorporation (COI), PAN, TAN, and EPFO/ESIC/GST registration',
+      'Digital Signature Certificates (DSC) & Director Identification Numbers (DIN)',
+      'Certificate of Incorporation (COI), PAN, TAN, and EPFO/ESIC/GST Registrations',
       'Statutory Declaration for Commencement of Business (INC-20A)',
       'Customized Memorandum & Articles of Association aligned with investor terms'
     ],
@@ -33,10 +33,32 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     timeline: '3 to 5 Business Days'
   },
   {
-    id: 'annual-compliance',
+    id: 'gst-filing',
     number: '02',
+    name: 'GST Filing',
+    shortDescription: 'Seamless GST registration, monthly and quarterly return filings, and input tax credit reconciliation.',
+    fullDescription: 'Proactive management of Goods and Services Tax compliance, including state registrations, monthly GSTR-1 and GSTR-3B filings, annual GSTR-9 reconciliation, and responding to departmental notices.',
+    category: 'Compliance',
+    forms: ['REG-01', 'GSTR-1', 'GSTR-3B', 'GSTR-9 / 9C', 'CMP-08'],
+    deliverables: [
+      'New GST Registration, Amendment, and Multi-State Expansion',
+      'Monthly & Quarterly Return Preparation and Filing (GSTR-1, GSTR-3B)',
+      'Rigorous Input Tax Credit (ITC) Reconciliation with GSTR-2B',
+      'Preparation and Certification of Annual GST Returns (GSTR-9 & 9C)',
+      'Drafting Replies to GST Show Cause Notices and Scrutiny Queries'
+    ],
+    keyBenefits: [
+      'Maximized Input Tax Credit without mismatch risks',
+      '100% on-time submission eliminating compounding late fees',
+      'Audit-ready documentation and reconciliation statements'
+    ],
+    timeline: 'Monthly & Quarterly Cycles'
+  },
+  {
+    id: 'annual-compliance',
+    number: '03',
     name: 'Annual Compliance',
-    shortDescription: 'Manage mandatory filings, returns, records, and compliance requirements.',
+    shortDescription: 'Manage mandatory statutory filings, returns, records, and annual corporate compliance requirements.',
     fullDescription: 'Proactive management of statutory annual requirements to maintain active status with the Registrar of Companies (ROC), preventing director disqualification, penal interest, and corporate strikes.',
     category: 'Compliance',
     forms: ['AOC-4 / AOC-4 XBRL', 'MGT-7 / MGT-7A', 'DIR-3 KYC', 'DPT-3', 'MSME-1'],
@@ -55,35 +77,13 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     timeline: 'Continuous monitoring & annual cycles'
   },
   {
-    id: 'corporate-governance',
-    number: '03',
-    name: 'Corporate Governance',
-    shortDescription: 'Strengthen governance frameworks and ensure better corporate decision-making.',
-    fullDescription: 'Elevating corporate integrity through tailored governance matrices, board committee structuring, internal compliance audits, and adherence to Secretarial Standards (SS-1 and SS-2) issued by ICSI.',
-    category: 'Governance',
-    forms: ['DIR-12', 'MGT-14', 'BEN-2', 'CHG-1'],
-    deliverables: [
-      'Board Charter, Audit Committee, and Nomination & Remuneration frameworks',
-      'Related Party Transactions (RPT) policy and compliance register',
-      'Significant Beneficial Ownership (SBO / BEN-2) compliance filings',
-      'Whistleblower and Prevention of Sexual Harassment (POSH) secretarial frameworks',
-      'Independent Director onboarding and board evaluation matrices'
-    ],
-    keyBenefits: [
-      'Investor-grade governance ready for venture funding or IPO',
-      'Mitigation of personal director liability and regulatory risks',
-      'Fosters transparent stakeholder and shareholder confidence'
-    ],
-    timeline: 'Quarterly review & custom advisory'
-  },
-  {
-    id: 'roc-mca-filings',
+    id: 'roc-filing',
     number: '04',
-    name: 'ROC & MCA Filings',
-    shortDescription: 'Support with regulatory filings and corporate documentation.',
+    name: 'ROC Filing',
+    shortDescription: 'Support with event-based regulatory filings, corporate documentation, and MCA-21 submissions.',
     fullDescription: 'Comprehensive management of all event-based MCA-21 v3 portal filings, ensuring timely submission of corporate alterations, charges, share allotments, and registered office changes.',
     category: 'Compliance',
-    forms: ['MGT-14', 'DIR-12', 'PAS-3', 'SH-7', 'CHG-1 / CHG-4', 'INC-22'],
+    forms: ['DIR-12', 'PAS-3', 'SH-7', 'CHG-1 / CHG-4', 'INC-22'],
     deliverables: [
       'Director appointment, resignation, and regularization filings (DIR-12)',
       'Allotment of shares, private placement, and rights issue filings (PAS-3)',
@@ -99,92 +99,92 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     timeline: 'Within 24 to 48 Hours of event approval'
   },
   {
-    id: 'board-general-meetings',
+    id: 'trademark-registration',
     number: '05',
-    name: 'Board & General Meetings',
-    shortDescription: 'Assistance with notices, agendas, minutes, resolutions, and statutory procedures.',
-    fullDescription: 'End-to-end secretarial execution of Board Meetings, Committee Meetings, Annual General Meetings (AGM), and Extraordinary General Meetings (EGM) strictly compliant with Secretarial Standards (SS-1 & SS-2).',
-    category: 'Governance',
-    forms: ['MGT-14', 'MGT-15', 'Minutes Book Management'],
+    name: 'Trademark Registration',
+    shortDescription: 'Protect brand identity, corporate logos, and intellectual property with statutory trademark filing.',
+    fullDescription: 'End-to-end trademark prosecution and intellectual property advisory under the Trade Marks Act, safeguarding your business goodwill, logos, slogans, and corporate brand assets from infringement.',
+    category: 'Advisory',
+    forms: ['TM-A', 'TM-M', 'TM-O', 'TM-R'],
     deliverables: [
-      'Drafting comprehensive meeting notices, detailed agendas, and explanatory statements',
-      'Preparation of standard and special board/shareholder resolutions',
-      'Strict adherence to statutory notice periods and quorum requirements',
-      'Drafting, circulation, and final entry of Board & AGM Minutes in statutory books',
-      'Filing of filing-worthy resolutions with ROC in Form MGT-14 within 30 days'
+      'Comprehensive IP India Trademark Search & Nice Classification Analysis',
+      'Drafting, Class Selection, and E-Filing of Form TM-A',
+      'Preparation of Written Responses to Examination Reports (Objections)',
+      'Representation at Trademark Registry Hearings across jurisdictions',
+      'Procurement of Trademark Registration Certificate & Renewal Filings'
     ],
     keyBenefits: [
-      'Flawless legal defensibility of corporate resolutions',
-      'Digital preservation of meeting records with audit trails',
-      'Expert guidance during contentious board discussions and voting'
+      'Nationwide legal monopoly over your trade name and brand logo',
+      'Statutory defense against brand passing-off and commercial infringement',
+      'Creation of a valuable intangible asset for investment and valuation'
     ],
-    timeline: 'Pre-meeting, live secretarial support & post-meeting archiving'
+    timeline: 'Filing within 24 Hours, active lifecycle tracking'
   },
   {
-    id: 'secretarial-audit',
+    id: 'legal-advisory',
     number: '06',
-    name: 'Secretarial Audit',
-    shortDescription: 'Professional review of compliance and secretarial practices.',
-    fullDescription: 'Mandatory and voluntary secretarial audits under Section 204 of the Companies Act, 2013 and SEBI regulations. Comprehensive verification of statutory registers, registers of members, debenture holders, and statutory compliances.',
+    name: 'Legal Advisory',
+    shortDescription: 'Strategic legal and secretarial counsel on corporate structuring, contracts, and regulatory governance.',
+    fullDescription: 'High-level retained and project-based advisory on Companies Act, corporate agreements, board governance, FEMA regulations, and compounding of statutory offenses.',
+    category: 'Advisory',
+    forms: ['DIR-12', 'MGT-14', 'Compounding Petitions', 'Commercial Agreements'],
+    deliverables: [
+      'Drafting & Vetting Founders Agreements, Commercial Contracts, and MoUs',
+      'Board Charter and Corporate Governance advisory aligned with ICSI Standards',
+      'Legal opinions on director liabilities, inter-corporate loans, and deposits',
+      'Preparation of Compounding Applications for procedural delays or defaults',
+      'Corporate restructuring, shareholder dispute mitigation, and advisory'
+    ],
+    keyBenefits: [
+      'Mitigation of personal director liability and regulatory risks',
+      'Flawless legal defensibility of corporate contracts and resolutions',
+      'Authoritative opinions backed by judicial precedents and legal clarity'
+    ],
+    timeline: 'On-demand advisory & dedicated retainers'
+  },
+  {
+    id: 'tax-filing',
+    number: '07',
+    name: 'Tax Filing',
+    shortDescription: 'Comprehensive corporate and business income tax returns, TDS compliance, and statutory tax filings.',
+    fullDescription: 'Accurate and timely direct tax filings for corporate entities, LLPs, partnerships, and proprietors, ensuring full alignment between statutory financial statements and tax computations.',
+    category: 'Compliance',
+    forms: ['ITR-5', 'ITR-6', 'Form 26Q / 24Q', 'Form 15CA / 15CB'],
+    deliverables: [
+      'Corporate and Firm Income Tax Return Preparation and E-Filing (ITR-5, ITR-6)',
+      'Quarterly TDS / TCS Computation, Deposit, and Return Filings (24Q, 26Q)',
+      'Issuance of Form 16 / 16A and TDS Reconciliation with Form 26AS / AIS',
+      'Foreign Remittance Certifications (Form 15CB) and 15CA Filings',
+      'Assistance with Income Tax Scrutiny, Rectifications, and Refund Follow-ups'
+    ],
+    keyBenefits: [
+      'Complete statutory synchronization with audited financial statements',
+      'Zero penalty risk through strict adherence to filing calendars',
+      'Proactive identification of applicable deductions and tax credits'
+    ],
+    timeline: 'Quarterly & Annual Deadlines'
+  },
+  {
+    id: 'audit-support',
+    number: '08',
+    name: 'Audit Support',
+    shortDescription: 'Secretarial audit, statutory compliance diligence, and independent verification of corporate records.',
+    fullDescription: 'Mandatory and voluntary secretarial audits under Section 204 of the Companies Act, 2013 and allied regulations. Comprehensive verification of statutory registers, minutes, and corporate compliances.',
     category: 'Audits',
-    forms: ['Form MR-3', 'Secretarial Compliance Report', 'Regulation 24A SEBI LODR'],
+    forms: ['Form MR-3', 'Secretarial Compliance Report', 'Due Diligence Certificate'],
     deliverables: [
       'Issuance of formal Secretarial Audit Report in Form MR-3',
-      'Comprehensive verification of corporate acts against applicable central & state laws',
-      'Identification of non-compliances, penalties, and remedial compounding avenues',
-      'Secretarial Compliance Report for listed and large public unlisted entities',
-      'Due Diligence certification for mergers, funding, or debt syndication'
+      'Comprehensive verification of corporate acts against applicable corporate laws',
+      'Identification of statutory non-compliances and remedial compounding avenues',
+      'Secretarial Compliance Report for qualifying corporate entities',
+      'Corporate Governance Due Diligence certification for lenders and investors'
     ],
     keyBenefits: [
       'Detects latent non-compliance before regulatory notices occur',
       'Essential reassurance for Board of Directors and Institutional Investors',
       'Provides actionable roadmap to remediate governance gaps'
     ],
-    timeline: '2 to 3 Weeks comprehensive audit'
-  },
-  {
-    id: 'business-restructuring',
-    number: '07',
-    name: 'Business Restructuring',
-    shortDescription: 'Support for mergers, restructuring, corporate changes, and related compliance.',
-    fullDescription: 'Strategic secretarial and regulatory navigation for Schemes of Arrangement, Amalgamations, Fast-Track Mergers (Section 233), Demergers, Capital Reduction, and Conversion between corporate entities.',
-    category: 'Advisory',
-    forms: ['CAA-1 to CAA-11', 'RD Filings', 'NCLT Petitions', 'INC-6 / INC-27'],
-    deliverables: [
-      'Fast-track merger secretarial facilitation between holding & wholly owned subsidiaries',
-      'NCLT court-convened meeting notices, petitions, and representation support',
-      'Conversion of Private Limited to Public Limited, or LLP to Company',
-      'Capital reduction, buyback of shares, and ESOP scheme implementation',
-      'Statutory filings with Regional Director (RD), ROC, and Official Liquidator'
-    ],
-    keyBenefits: [
-      'Streamlined execution minimizing administrative friction',
-      'Tax-efficient corporate structuring backed by statutory compliance',
-      'Complete documentation safeguarding creditor and minority interests'
-    ],
-    timeline: '60 to 180 Days depending on regulatory path'
-  },
-  {
-    id: 'legal-regulatory-advisory',
-    number: '08',
-    name: 'Legal & Regulatory Advisory',
-    shortDescription: 'Professional guidance for corporate and regulatory matters.',
-    fullDescription: 'High-level retained and project-based advisory on Companies Act, FEMA regulations, RBI guidelines for foreign investment (FDI / ODI), SEBI compliance, and compounding of statutory offenses.',
-    category: 'Advisory',
-    forms: ['FC-GPR', 'FC-TRS', 'FLA Return', 'Compounding Applications under Section 441'],
-    deliverables: [
-      'Inbound FDI compliance, foreign shareholder reporting, and FIRMS portal filings',
-      'Annual Foreign Liabilities and Assets (FLA) return filing with Reserve Bank of India',
-      'Preparation of Compounding Applications for procedural delays or defaults',
-      'Legal opinions on director disqualification, inter-corporate loans, and deposits',
-      'Advisory on Corporate Social Responsibility (CSR) policy formulation and reporting'
-    ],
-    keyBenefits: [
-      'Prevents severe penal actions and criminal prosecution under corporate law',
-      'Ensures cross-border capital moves with full regulatory sanitation',
-      'Authoritative opinions backed by judicial precedents and legal clarity'
-    ],
-    timeline: 'On-demand advisory & dedicated retainer contracts'
+    timeline: '2 to 3 Weeks Comprehensive Review'
   }
 ];
 

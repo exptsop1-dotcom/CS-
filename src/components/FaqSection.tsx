@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { HelpCircle, ChevronDown, MessageSquare, ArrowRight } from 'lucide-react';
+import { HelpCircle, ChevronDown, ArrowRight } from 'lucide-react';
 import { FAQS } from '../data/placeholderData';
 import { useCustomizer } from '../context/CustomizerContext';
 
@@ -13,21 +13,21 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section className="relative py-20 sm:py-28 border-t border-white/10 bg-[#020408]/90 overflow-hidden">
+    <section className="relative py-20 sm:py-24 bg-[#FAF9F6] border-t border-slate-200/80 text-left">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center space-y-4 pb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#00D4FF]/30 text-[#00D4FF] text-[10px] font-bold tracking-[0.3em] uppercase bg-[#00D4FF]/5 rounded-none font-mono">
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>STATUTORY & PRACTICE CLARITY // FAQ</span>
+        <div className="text-center space-y-3 pb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F4F1EA] border border-[#E5E0D4] text-slate-700 text-xs font-semibold">
+            <HelpCircle className="w-3.5 h-3.5 text-sky-700" />
+            <span>STATUTORY & PRACTICE CLARITY</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight uppercase leading-tight font-display">
-            Questions, Answered.
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+            Frequently Asked Questions.
           </h2>
 
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-sans">
+          <p className="text-slate-600 text-base leading-relaxed">
             Everything corporate promoters, directors, and executives need to know about engaging our Company Secretary practice.
           </p>
         </div>
@@ -39,10 +39,10 @@ export const FaqSection: React.FC = () => {
             return (
               <div
                 key={faq.id}
-                className={`rounded-none border transition-all duration-200 overflow-hidden font-mono ${
+                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                   isOpen
-                    ? 'bg-white/10 border-white/20 border-l-2 border-l-[#00D4FF] shadow-lg'
-                    : 'bg-white/5 border-white/10 hover:border-white/20'
+                    ? 'bg-white border-slate-300 shadow-sm'
+                    : 'bg-white/80 border-slate-200/80 hover:border-slate-300'
                 }`}
               >
                 <button
@@ -50,18 +50,18 @@ export const FaqSection: React.FC = () => {
                   className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono font-bold text-[#00D4FF]">
+                    <span className="text-xs font-mono font-bold text-sky-700">
                       0{idx + 1}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-wide">
+                    <h3 className="text-sm sm:text-base font-bold text-slate-900">
                       {faq.question}
                     </h3>
                   </div>
 
-                  <div className={`p-1 rounded-none border transition-transform ${
+                  <div className={`p-1 rounded-lg border transition-transform ${
                     isOpen
-                      ? 'bg-[#00D4FF] border-[#00D4FF] text-black rotate-180'
-                      : 'bg-white/5 border-white/10 text-slate-400'
+                      ? 'bg-[#0A2540] border-[#0A2540] text-white rotate-180'
+                      : 'bg-slate-50 border-slate-200 text-slate-500'
                   }`}>
                     <ChevronDown className="w-4 h-4" />
                   </div>
@@ -75,9 +75,9 @@ export const FaqSection: React.FC = () => {
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/10 mt-1 font-sans">
-                        <div className="text-[9px] font-mono text-[#00D4FF] uppercase tracking-widest mb-2 font-bold">
-                          PRACTICE ADVISORY // {faq.category.toUpperCase()}
+                      <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 mt-1">
+                        <div className="text-[11px] font-semibold text-sky-700 uppercase tracking-wider mb-1.5">
+                          Practice Advisory • {faq.category}
                         </div>
                         <p>{faq.answer}</p>
                       </div>
@@ -89,19 +89,19 @@ export const FaqSection: React.FC = () => {
           })}
         </div>
 
-        {/* Bottom prompt */}
-        <div className="mt-12 p-6 rounded-none bg-white/5 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left font-mono">
+        {/* Bottom CTA Box */}
+        <div className="mt-12 p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
-            <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wide">
+            <h4 className="text-sm font-bold text-slate-900">
               Have a specific corporate secretarial inquiry?
             </h4>
-            <p className="text-xs text-slate-400 mt-0.5 font-sans">
-              Our partners are available for confidential consultations.
+            <p className="text-xs text-slate-500 mt-0.5">
+              Our practicing CS partners are available for confidential consultations.
             </p>
           </div>
           <button
             onClick={() => setIsConsultationOpen(true)}
-            className="px-5 py-2 rounded-none bg-[#00D4FF] hover:bg-[#00E5FF] text-black font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,212,255,0.3)] transition-all cursor-pointer"
+            className="btn-primary-navy px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
             <span>Ask a Company Secretary</span>
             <ArrowRight className="w-3.5 h-3.5" />

@@ -86,9 +86,20 @@ export interface ComplianceFiling {
 export interface PrototypeConfig {
   companyName: string;
   tagline: string;
-  email: string;
-  phone: string;
-  location: string;
+  firmType: string;
+  yearEstablished: string;
   regNumber: string;
-  accentColor: 'cyan' | 'violet' | 'emerald';
+  aboutFirm: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  workingHours: string;
+  teamMemberName: string;
+  teamMemberRole: string;
+  showGoogleMaps: boolean;
+  accentColor?: string;
+  location?: string;
 }

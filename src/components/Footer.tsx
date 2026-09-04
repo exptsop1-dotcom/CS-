@@ -11,103 +11,106 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="relative bg-[#020408] border-t border-white/10 pt-16 pb-12 overflow-hidden text-slate-400 font-mono">
-      {/* Subtle top glow line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00D4FF]/40 to-transparent" />
-
+    <footer className="relative bg-[#0A2540] text-slate-300 pt-16 pb-12 overflow-hidden text-left border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-700/60">
           
           {/* Col 1 & 2: Brand & Tagline */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-[#00D4FF]">
-                <ShieldCheck className="w-4 h-4" />
+              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-sky-400">
+                <ShieldCheck className="w-5 h-5" />
               </div>
-              <span className="font-mono font-bold text-lg text-white tracking-widest uppercase">
+              <span className="font-bold text-lg text-white tracking-wide">
                 {config.companyName}
               </span>
             </div>
 
-            <p className="text-[#00D4FF] font-mono text-xs uppercase tracking-wider font-semibold">
+            <p className="text-sky-300 text-xs uppercase tracking-wider font-semibold">
               "{config.tagline}"
             </p>
 
-            <p className="text-xs text-slate-400 max-w-sm leading-relaxed font-sans">
+            <p className="text-xs text-slate-300 max-w-sm leading-relaxed">
               Practicing Company Secretary firm delivering corporate compliance intelligence, secretarial audits, board governance, and statutory filings for modern enterprises.
             </p>
 
             <div className="pt-2 flex items-center gap-3">
               <button
                 onClick={() => setIsCustomizerOpen(true)}
-                className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#00D4FF] hover:text-white bg-white/5 px-3 py-1.5 rounded-none border border-white/10 hover:border-[#00D4FF] transition-colors cursor-pointer uppercase tracking-wider"
+                className="inline-flex items-center gap-1.5 text-xs text-sky-300 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/15 transition-colors cursor-pointer"
               >
-                <Sparkles className="w-3 h-3" />
-                <span>Edit Prototype Placeholders</span>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Customizer & Prototype Settings</span>
               </button>
             </div>
           </div>
 
           {/* Col 3: Navigation */}
           <div>
-            <h4 className="text-[10px] font-mono text-white uppercase font-bold tracking-widest mb-4">
+            <h4 className="text-xs text-white uppercase font-bold tracking-wider mb-4">
               Navigation
             </h4>
-            <ul className="space-y-2 text-xs font-mono">
+            <ul className="space-y-2 text-xs text-slate-300">
               <li>
-                <a href="#home" className="hover:text-[#00D4FF] transition-colors">Home</a>
+                <a href="#home" className="hover:text-white transition-colors">Home</a>
               </li>
               <li>
-                <a href="#about" className="hover:text-[#00D4FF] transition-colors">About Us</a>
+                <a href="#about" className="hover:text-white transition-colors">About Us</a>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#00D4FF] transition-colors">Services</a>
+                <a href="#services" className="hover:text-white transition-colors">Practice Areas</a>
               </li>
               <li>
-                <a href="#journey" className="hover:text-[#00D4FF] transition-colors">Compliance Journey</a>
+                <a href="#journey" className="hover:text-white transition-colors">Compliance Journey</a>
               </li>
               <li>
-                <a href="#dashboard-preview" className="hover:text-[#00D4FF] transition-colors">Portal Dashboard</a>
+                <a href="#dashboard-preview" className="hover:text-white transition-colors">Client Portal</a>
               </li>
               <li>
-                <a href="#insights" className="hover:text-[#00D4FF] transition-colors">Corporate Insights</a>
+                <a href="#insights" className="hover:text-white transition-colors">Insights & Articles</a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-[#00D4FF] transition-colors">Contact</a>
+                <a href="#contact" className="hover:text-white transition-colors">Contact</a>
               </li>
             </ul>
           </div>
 
           {/* Col 4: Core Services */}
           <div>
-            <h4 className="text-[10px] font-mono text-white uppercase font-bold tracking-widest mb-4">
-              Secretarial Services
+            <h4 className="text-xs text-white uppercase font-bold tracking-wider mb-4">
+              Practicing Services
             </h4>
-            <ul className="space-y-2 text-xs font-mono">
-              <li><a href="#services" className="hover:text-[#00D4FF] transition-colors">Company Incorporation</a></li>
-              <li><a href="#services" className="hover:text-[#00D4FF] transition-colors">Annual MCA Filings</a></li>
-              <li><a href="#services" className="hover:text-[#00D4FF] transition-colors">Secretarial Audit (MR-3)</a></li>
-              <li><a href="#services" className="hover:text-[#00D4FF] transition-colors">Corporate Restructuring</a></li>
-              <li><a href="#services" className="hover:text-[#00D4FF] transition-colors">FEMA & FDI Compliance</a></li>
-              <li><a href="#services" className="hover:text-[#00D4FF] transition-colors">Board Meeting Advisory</a></li>
+            <ul className="space-y-2 text-xs text-slate-300">
+              <li><a href="#services" className="hover:text-white transition-colors">Company Registration</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">GST Filing</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Annual Compliance</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">ROC Filing</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Trademark Registration</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Legal Advisory</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Tax Filing</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Audit Support</a></li>
             </ul>
           </div>
 
           {/* Col 5: Statutory Credentials */}
           <div>
-            <h4 className="text-[10px] font-mono text-white uppercase font-bold tracking-widest mb-4">
-              Practice Profile
+            <h4 className="text-xs text-white uppercase font-bold tracking-wider mb-4">
+              Firm Credentials
             </h4>
-            <div className="space-y-2 text-xs text-slate-400">
-              <div className="p-3 rounded-none bg-white/5 border border-white/10 text-[10px] font-mono">
-                <div className="text-slate-500 uppercase tracking-wider">ICSI COP NUMBER:</div>
-                <div className="text-[#00D4FF] font-bold mt-0.5 tracking-wider">{config.regNumber}</div>
+            <div className="space-y-2.5 text-xs text-slate-300">
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <div className="text-slate-400 text-[10px] uppercase font-medium">CS REGISTRATION NO:</div>
+                <div className="text-white font-bold mt-0.5">{config.regNumber}</div>
               </div>
-              <div className="p-3 rounded-none bg-white/5 border border-white/10 text-[10px] font-mono">
-                <div className="text-slate-500 uppercase tracking-wider">HEADQUARTERS:</div>
-                <div className="text-white mt-0.5 tracking-wider">{config.location}</div>
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <div className="text-slate-400 text-[10px] uppercase font-medium">ESTABLISHED:</div>
+                <div className="text-white font-bold mt-0.5">{config.yearEstablished} ({config.firmType})</div>
+              </div>
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
+                <div className="text-slate-400 text-[10px] uppercase font-medium">HEAD OFFICE:</div>
+                <div className="text-white mt-0.5">{config.city}, {config.state}</div>
               </div>
             </div>
           </div>
@@ -115,38 +118,38 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Regulatory Disclaimer */}
-        <div className="py-6 border-b border-white/10 text-[10px] text-slate-500 leading-relaxed font-mono">
+        <div className="py-6 border-b border-slate-700/60 text-xs text-slate-400 leading-relaxed">
           <p>
-            STATUTORY NOTICE & DISCLAIMER: This website is a modern prototype demonstration platform for professional Company Secretary (CS) and corporate governance practices. The contents are intended purely for institutional governance information and do not constitute an advertisement or solicitation in violation of ICSI Code of Professional Conduct. All client records and advisory briefs are preserved under strict professional confidentiality.
+            STATUTORY NOTICE & DISCLAIMER: This website is an executive demonstration platform for professional Company Secretary (CS) and corporate governance practices. The contents are intended for corporate information and do not constitute an advertisement or solicitation in violation of the ICSI Code of Professional Conduct. All client consultations and records are maintained under attorney-client confidentiality.
           </p>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
-          <div>
-            © 2026 <span className="text-white font-bold">{config.companyName}</span>. All Rights Reserved.
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+          <div className="text-slate-400">
+            © 2026 <span className="text-white font-semibold">{config.companyName}</span>. All Rights Reserved.
           </div>
 
           <div className="flex items-center gap-6">
             <button
               onClick={() => setLegalModal('privacy')}
-              className="hover:text-[#00D4FF] transition-colors cursor-pointer uppercase tracking-wider"
+              className="hover:text-white transition-colors cursor-pointer"
             >
               Privacy Policy
             </button>
             <span>•</span>
             <button
               onClick={() => setLegalModal('terms')}
-              className="hover:text-[#00D4FF] transition-colors cursor-pointer uppercase tracking-wider"
+              className="hover:text-white transition-colors cursor-pointer"
             >
-              Terms & Conditions
+              Terms of Engagement
             </button>
             <span>•</span>
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-1 hover:text-[#00D4FF] text-slate-300 transition-colors cursor-pointer uppercase tracking-wider"
+              className="flex items-center gap-1 hover:text-white text-slate-300 transition-colors cursor-pointer"
             >
-              <span>TOP</span>
+              <span>Back to Top</span>
               <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -156,38 +159,38 @@ export const Footer: React.FC = () => {
 
       {/* Privacy Policy & Terms Modal */}
       {legalModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md font-mono">
-          <div className="relative w-full max-w-lg bg-[#020408] border border-white/10 rounded-none p-6 shadow-2xl text-left">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
-                {legalModal === 'privacy' ? 'Client Confidentiality & Privacy Policy' : 'Terms & Statutory Engagement'}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+          <div className="relative w-full max-w-lg bg-white rounded-2xl p-6 sm:p-7 shadow-xl text-left border border-slate-200">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="text-base font-bold text-slate-900">
+                {legalModal === 'privacy' ? 'Client Confidentiality & Privacy Policy' : 'Terms of Statutory Engagement'}
               </h3>
               <button
                 onClick={() => setLegalModal(null)}
-                className="p-1 text-slate-400 hover:text-white rounded-none border border-white/10 hover:border-white/30 transition-colors"
+                className="p-1 text-slate-400 hover:text-slate-800 rounded-lg border border-slate-200 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="mt-4 text-xs text-slate-300 space-y-3 leading-relaxed max-h-80 overflow-y-auto font-sans">
+            <div className="mt-4 text-xs sm:text-sm text-slate-600 space-y-3 leading-relaxed max-h-80 overflow-y-auto">
               <p>
-                <strong className="font-mono text-white">1. Confidentiality:</strong> All company documents, director KYC documents, capitalization data, and draft board resolutions received by {config.companyName} are treated with privileged fiduciary confidentiality.
+                <strong className="text-slate-900">1. Confidentiality:</strong> All statutory records, director KYC credentials, capitalization data, and draft board minutes received by {config.companyName} are treated with privileged fiduciary confidentiality.
               </p>
               <p>
-                <strong className="font-mono text-white">2. Data Encryption:</strong> Secretarial records, Digital Signature Certificates (DSC tokens), and MCA portal credentials are stored using AES-256 equivalent cryptographic protocols.
+                <strong className="text-slate-900">2. Data Security:</strong> Secretarial records, Digital Signature Certificates (DSC tokens), and MCA portal credentials are kept under high-security safeguards.
               </p>
               <p>
-                <strong className="font-mono text-white">3. ICSI Standards:</strong> All professional secretarial assignments strictly adhere to the guidelines formulated by the Institute of Company Secretaries of India (ICSI).
+                <strong className="text-slate-900">3. ICSI Standards:</strong> All professional secretarial assignments strictly adhere to the standards and ethics formulated by the Institute of Company Secretaries of India (ICSI).
               </p>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-white/10 text-right font-mono">
+            <div className="mt-5 pt-3 border-t border-slate-100 text-right">
               <button
                 onClick={() => setLegalModal(null)}
-                className="px-4 py-2 rounded-none bg-[#00D4FF] hover:bg-[#00E5FF] text-black font-bold text-xs uppercase tracking-wider cursor-pointer"
+                className="btn-primary-navy px-5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider cursor-pointer"
               >
-                Acknowledge & Close
+                Close
               </button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { CustomizerProvider } from './context/CustomizerContext';
+import { WorkspaceProvider } from './context/WorkspaceContext';
 import { CyberBackground } from './components/CyberBackground';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -22,62 +23,64 @@ import { CustomizerDrawer } from './components/CustomizerDrawer';
 export default function App() {
   return (
     <CustomizerProvider>
-      <div className="relative min-h-screen bg-[#020408] text-slate-100 font-sans selection:bg-[#00D4FF]/30 selection:text-[#00D4FF]">
-        {/* Subtle Cyber Grid & Ambient Canvas */}
-        <CyberBackground />
+      <WorkspaceProvider>
+        <div className="relative min-h-screen bg-[#FAF9F6] text-slate-800 font-sans selection:bg-sky-100 selection:text-sky-900">
+          {/* Subtle architectural canvas */}
+          <CyberBackground />
 
-        {/* Global Floating Modals & Customizers */}
-        <ConsultationModal />
-        <CustomizerDrawer />
+          {/* Global Floating Modals & Customizers */}
+          <ConsultationModal />
+          <CustomizerDrawer />
 
-        {/* Sticky Glassmorphic Navigation */}
-        <Navbar />
+          {/* Sticky Navigation */}
+          <Navbar />
 
-        {/* Main Content Flow */}
-        <main className="relative z-10">
-          {/* 1. Hero Section */}
-          <HeroSection />
+          {/* Main Content Flow */}
+          <main className="relative z-10">
+            {/* 1. Hero Section with Real-Time Compliance Feeds & Interactive Charts */}
+            <HeroSection />
 
-          {/* 2. Trust / Statistics Section */}
-          <StatsSection />
+            {/* 2. Trust / Statistics Section */}
+            <StatsSection />
 
-          {/* 3. About Section */}
-          <AboutSection />
+            {/* 3. About Section */}
+            <AboutSection />
 
-          {/* 4. Services Section */}
-          <ServicesSection />
+            {/* 4. Services Section with Direct Enquiry Triggers */}
+            <ServicesSection />
 
-          {/* 5. Interactive Services Explorer (Compliance Journey) */}
-          <JourneyExplorer />
+            {/* 5. Interactive Services Explorer (Compliance Journey) */}
+            <JourneyExplorer />
 
-          {/* 6. Why Choose Us */}
-          <WhyChooseUs />
+            {/* 6. Why Choose Us */}
+            <WhyChooseUs />
 
-          {/* 7. How It Works (Process Timeline) */}
-          <ProcessTimeline />
+            {/* 7. How It Works (Process Timeline) */}
+            <ProcessTimeline />
 
-          {/* 8. Industries Served */}
-          <IndustriesSection />
+            {/* 8. Industries Served */}
+            <IndustriesSection />
 
-          {/* 9. Compliance Dashboard Preview (Prototype) */}
-          <ComplianceDashboardPreview />
+            {/* 9. Compliance Dashboard Preview */}
+            <ComplianceDashboardPreview />
 
-          {/* 10. Testimonials */}
-          <TestimonialsSection />
+            {/* 10. Testimonials */}
+            <TestimonialsSection />
 
-          {/* 11. FAQ Section */}
-          <FaqSection />
+            {/* 11. FAQ Section */}
+            <FaqSection />
 
-          {/* 12. Insights / Resources Section */}
-          <InsightsSection />
+            {/* 12. Insights / Resources Section with Subtle Animations */}
+            <InsightsSection />
 
-          {/* 13. Contact Section */}
-          <ContactSection />
-        </main>
+            {/* 13. Contact Section Connected to Google Sheets & Gmail */}
+            <ContactSection />
+          </main>
 
-        {/* 14. Footer */}
-        <Footer />
-      </div>
+          {/* 14. Footer */}
+          <Footer />
+        </div>
+      </WorkspaceProvider>
     </CustomizerProvider>
   );
 }

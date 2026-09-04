@@ -21,8 +21,8 @@ export const CyberBackground: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Particle nodes definition
-    const particleCount = Math.min(Math.floor(width / 32), 48);
+    // Subtle executive ambient points
+    const particleCount = Math.min(Math.floor(width / 45), 32);
     interface Particle {
       x: number;
       y: number;
@@ -30,7 +30,6 @@ export const CyberBackground: React.FC = () => {
       vy: number;
       radius: number;
       alpha: number;
-      pulseSpeed: number;
     }
 
     const particles: Particle[] = [];
@@ -38,35 +37,17 @@ export const CyberBackground: React.FC = () => {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        radius: Math.random() * 1.8 + 1,
-        alpha: Math.random() * 0.4 + 0.15,
-        pulseSpeed: 0.015 + Math.random() * 0.02
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: Math.random() * 1.5 + 0.8,
+        alpha: Math.random() * 0.2 + 0.05,
       });
     }
 
-    let time = 0;
     const render = () => {
-      time += 0.01;
       ctx.clearRect(0, 0, width, height);
 
-      // Subtle radial backdrop
-      const gradient = ctx.createRadialGradient(
-        width * 0.5,
-        height * 0.4,
-        100,
-        width * 0.5,
-        height * 0.5,
-        Math.max(width, height) * 0.8
-      );
-      gradient.addColorStop(0, 'rgba(0, 212, 255, 0.03)');
-      gradient.addColorStop(0.5, 'rgba(10, 16, 32, 0.4)');
-      gradient.addColorStop(1, 'rgba(2, 4, 8, 0)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, width, height);
-
-      // Update and draw connections
+      // Draw faint connections
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
         p1.x += p1.vx;
@@ -83,21 +64,21 @@ export const CyberBackground: React.FC = () => {
           const dy = p1.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 120) {
-            const linkAlpha = (1 - dist / 120) * 0.15;
+          if (dist < 140) {
+            const linkAlpha = (1 - dist / 140) * 0.06;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 212, 255, ${linkAlpha})`;
-            ctx.lineWidth = 0.6;
+            ctx.strokeStyle = `rgba(15, 23, 42, ${linkAlpha})`;
+            ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
 
-        // Draw particle node (square or sharp tech point)
-        const currentAlpha = p1.alpha + Math.sin(time * 2 + i) * 0.1;
-        ctx.fillStyle = `rgba(0, 212, 255, ${Math.max(0.08, currentAlpha)})`;
-        ctx.fillRect(p1.x - 1, p1.y - 1, 2, 2);
+        ctx.beginPath();
+        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(15, 23, 42, ${p1.alpha})`;
+        ctx.fill();
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -113,20 +94,16 @@ export const CyberBackground: React.FC = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Background base #020408 with radial gradient */}
+      {/* Warm off-white base with soft ambient warmth */}
       <div 
-        className="absolute inset-0 bg-[#020408]"
+        className="absolute inset-0 bg-[#FAF9F6]"
         style={{
-          background: 'radial-gradient(circle at 50% 50%, #0a1020 0%, #020408 100%)'
+          backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(244, 241, 234, 0.7), rgba(250, 249, 246, 1))'
         }}
       />
-      {/* Technical Data Grid overlay */}
-      <div 
-        className="absolute inset-0 technical-grid opacity-[0.07]" 
-      />
-      {/* Subtle telemetry lines */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00D4FF]/20 to-transparent" />
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70" />
+      {/* Architectural subtle grid pattern */}
+      <div className="absolute inset-0 subtle-grid opacity-60" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
   );
 };
